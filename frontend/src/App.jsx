@@ -6,21 +6,23 @@ import { PatientDashboard } from './pages/patientDashboard';
 import { PublicHome } from './pages/PublicPage';
 import { ProviderDashboard } from './pages/ProviderDashboard';
 import { SignupPage } from './pages/singupPage';
+import { useState } from 'react';
 
 function App() {
+  const [user,setuser] = useState(null);
 
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<PublicHome />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={< LoginPage setuser = {setuser} />} />
         <Route path="/register" element={<SignupPage/>} />
 
         <Route 
           path="/patient/dashboard" 
-          element={
-              <PatientDashboard /> 
+          element={user ?
+              <PatientDashboard user={user} setuser={setuser} /> :<Navigate to="/" />
           } 
         />
 
@@ -28,7 +30,7 @@ function App() {
         <Route 
           path="/provider/dashboard" 
           element={
-              <ProviderDashboard /> 
+              < ProviderDashboard /> 
           } 
         />
 

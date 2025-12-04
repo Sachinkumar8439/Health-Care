@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Bell } from "lucide-react";
 import { getPatientDashboard } from "../handlers";
 
-export function PatientDashboard() {
+export function PatientDashboard({user}) {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -11,6 +11,7 @@ export function PatientDashboard() {
     const fetchDashboard = async () => {
       try {
         const data = await getPatientDashboard();
+        console.log(data);
         setDashboard(data);
       } catch (err) {
         setError(err.message || "Failed to load dashboard");
@@ -26,7 +27,7 @@ export function PatientDashboard() {
 
   return (
     <div className="dashboard-container">
-      <h2 className="dash-header">Welcome, {dashboard.name} 👋</h2>
+      <h2 className="dash-header">Welcome, {user.name} 👋</h2>
 
       <div className="dash-grid">
         {/* Steps */}

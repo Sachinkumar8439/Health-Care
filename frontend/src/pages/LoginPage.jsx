@@ -3,7 +3,7 @@ import { Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../ApiService/api"; 
 
-export function LoginPage() {
+export function LoginPage({setuser}) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,15 +21,18 @@ export function LoginPage() {
     try {
       setLoading(true);
       const res = await api.post("/auth/login", form);
+      console.log(res)
       setLoading(false);
 
       // Save JWT token
       localStorage.setItem("token", res.data.token);
+      setuser(res.data.user);
 
       // Redirect based on role (example)
-      if (res.data.role === "patient") {
+      if (res.data.user.role === "patient") {
         navigate("/patient/dashboard");
-      } else if (res.data.role === "provider") {
+      } 
+      else if (res.data.user.role === "provider") {
         navigate("/provider/dashboard");
       }
     } catch (err) {

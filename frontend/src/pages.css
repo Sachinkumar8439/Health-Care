@@ -1,220 +1,4 @@
-.auth-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f4f4f6;
-}
-
-.auth-card {
-  width: 350px;
-  background: #fff;
-  padding: 32px;
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.auth-card h2 {
-  text-align: center;
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #f1f1f3;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  transition: 0.2s ease;
-}
-
-.input-group:hover {
-  border: 1px solid #ccc;
-}
-
-.input-group input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 15px;
-}
-
-.btn {
-  background: #111;
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 16px;
-  transition: 0.2s ease;
-}
-
-.btn:hover {
-  opacity: 0.85;
-}
-
-.center-text {
-  text-align: center;
-}
-
-.link {
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 4px;
-  opacity: 0.7;
-}
-
-.link:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.dashboard-container {
-  padding: 30px 40px;
-  background: #f6f7f9;
-  min-height: 100vh;
-}
-
-.dash-header {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 25px;
-}
-
-/* GRID */
-.dash-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-}
-
-/* CARD */
-.dash-card {
-  background: #fff;
-  padding: 22px;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: 0.25s ease;
-}
-
-.dash-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-
-.dash-card h3 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.dash-card p {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-/* PROGRESS BAR */
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: #e6e6e9;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-bar div {
-  height: 100%;
-  background: #111;
-  border-radius: 10px;
-}
-
-/* REMINDERS */
-.reminders {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.reminders li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-/* TIP CARD */
-.tip {
-  background: #111;
-  color: #fff;
-}
-
-.tip p {
-  opacity: 0.9;
-}
-
-
-.provider-container {
-  padding: 30px 40px;
-  background: #f6f7f9;
-  min-height: 100vh;
-}
-
-.dash-header {
-  font-size: 26px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-/* Patient list */
-.provider-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Individual patient item */
-.provider-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  padding: 16px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  transition: 0.2s ease;
-}
-
-.provider-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-
-/* Status badges */
-.status {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-}
-
-/* Status variants */
-.status.Good { background: #4caf50; }
-.status['Low Activity'] { background: #ff9800; }
-.status.Excellent { background: #2196f3; }
-
+/* ----------------- AUTH ----------------- */
 .auth-container {
   height: 100vh;
   display: flex;
@@ -240,7 +24,12 @@
   margin-bottom: 10px;
 }
 
-/* Input group */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .input-group {
   display: flex;
   align-items: center;
@@ -264,7 +53,6 @@
   font-size: 15px;
 }
 
-/* Button */
 .btn {
   background: #111;
   color: #fff;
@@ -278,7 +66,6 @@
   opacity: 0.85;
 }
 
-/* Bottom link */
 .center-text {
   text-align: center;
 }
@@ -295,7 +82,6 @@
   text-decoration: underline;
 }
 
-/* error text */
 .error-text {
   color: #ff4d4f;
   font-size: 14px;
@@ -303,9 +89,115 @@
   margin-bottom: 10px;
 }
 
-/* Optional: style the form for spacing */
-.signup-form {
+/* ---------------- DASHBOARD / PROVIDER ---------------- */
+.dashboard-container,
+.provider-container {
+  padding: 30px 40px;
+  background: #f6f7f9;
+  min-height: 100vh;
+}
+
+.dash-header {
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+/* Grid layout */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Card styles */
+.dash-card,
+.provider-item {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
+  transition: 0.25s ease;
 }
+
+.dash-card:hover,
+.provider-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.dash-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dash-card p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e6e6e9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar div {
+  height: 100%;
+  background: #111;
+  border-radius: 10px;
+}
+
+/* Reminders */
+.reminders {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reminders li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* Tip card */
+.tip {
+  background: #111;
+  color: #fff;
+}
+
+.tip p {
+  opacity: 0.9;
+}
+
+/* Provider list */
+.provider-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Status badges */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status.Good { background: #4caf50; }
+.status.Low-Activity { background: #ff9800; }
+.status.Excellent { background: #2196f3; }

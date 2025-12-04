@@ -1,17 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-async function connectDB() {
-  const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/healthcare';
-  try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-    console.log('✅ MongoDB connected');
-  } catch (err) {
-    console.error('❌ MongoDB connection error', err.message);
-    process.exit(1);
-  }
-}
+const connectDB = async() => {
+    console.log("runnnig")
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("✅ MongoDB connected");
+    } catch (err) {
+        console.error("❌ MongoDB connection error:", err);
+    }
+};
 
 module.exports = connectDB;

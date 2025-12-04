@@ -1,13 +1,25 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:5000", 
+  baseURL: "http://localhost:5000", 
   timeout: 10000,
 });
 
+// Add request interceptor to include token from localStorage
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token"); // get token from localStorage
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for handling errors
 api.interceptors.response.use(
   (response) => response,
-
   (error) => {
     let finalError = {
       success: false,
@@ -38,13 +50,9 @@ api.interceptors.response.use(
       } else {
         finalError.message = "Unexpected error from server";
       }
-    }
-
-    else if (error.request) {
+    } else if (error.request) {
       finalError.message = "No response from server. Check your internet connection.";
-    }
-
-    else {
+    } else {
       finalError.message = error.message || "Unknown axios error";
     }
 

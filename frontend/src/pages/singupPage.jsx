@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, Lock, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../ApiService/api"; // your axios instance
+import api from "../ApiService/api"; 
 
 export function SignupPage() {
   const [form, setForm] = useState({
@@ -20,6 +20,7 @@ export function SignupPage() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("yes her ")
     e.preventDefault();
     setError("");
 
@@ -30,7 +31,7 @@ export function SignupPage() {
 
     try {
       setLoading(true);
-      const res = await api.post("/auth/signup", {
+      const res = await api.post("/auth/register", {
         name: form.name,
         email: form.email,
         password: form.password,
