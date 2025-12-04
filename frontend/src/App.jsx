@@ -1,41 +1,41 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import PatientDashboard from "./pages/PatientDashboard.jsx";
-import ProviderDashboard from "./pages/ProviderDashboard.jsx";
-import Layout from "./components/Layout.jsx";
-
-function PrivateRoute({ children }) {
-  const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/" replace />;
-}
+import './App.css';
+import './pages.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { LoginPage } from './pages/LoginPage';
+import { PatientDashboard } from './pages/patientDashboard';
+import { PublicHome } from './pages/PublicPage';
+import { ProviderDashboard } from './pages/ProviderDashboard';
+import { SignupPage } from './pages/singupPage';
 
 function App() {
+
+
   return (
-    <Layout>
+    <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<PublicHome />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<SignupPage/>} />
 
-        <Route
-          path="/dashboard"
+        <Route 
+          path="/patient/dashboard" 
           element={
-            <PrivateRoute>
-              <PatientDashboard />
-            </PrivateRoute>
-          }
+              <PatientDashboard /> 
+          } 
         />
 
-        <Route
-          path="/provider"
+        {/* Protected Provider Dashboard */}
+        <Route 
+          path="/provider/dashboard" 
           element={
-            <PrivateRoute>
-              <ProviderDashboard />
-            </PrivateRoute>
-          }
+              <ProviderDashboard /> 
+          } 
         />
+
+        {/* Redirect unknown routes to home */}
+        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
-    </Layout>
+    </Router>
   );
 }
 

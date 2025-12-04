@@ -1,117 +1,73 @@
 import { useEffect, useState } from "react";
-import API from "../api/api";
-import StepsCard from "../components/StepsCard.jsx";
-import SleepCard from "../components/SleepCard.jsx";
-import ReminderCard from "../components/ReminderCard.jsx";
+import { Bell } from "lucide-react";
+import { getPatientDashboard } from "../handlers";
 
-export default function PatientDashboard() {
-  const [data, setData] = useState(null);
-  const [logForm, setLogForm] = useState({
-    steps: "",
-    sleepHours: "",
-    waterIntakeML: "",
-  });
+export function PatientDashboard() {
+  const [dashboard, setDashboard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function load() {
+    const fetchDashboard = async () => {
       try {
-        const res = await API.get("/patient/dashboard");
-        setData(res.data);
+        const data = await getPatientDashboard();
+        setDashboard(data);
       } catch (err) {
-        console.error(err);
+        setError(err.message || "Failed to load dashboard");
+      } finally {
+        setLoading(false);
       }
-    }
-    load();
+    };
+    fetchDashboard();
   }, []);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setLogForm((f) => ({ ...f, [name]: value }));
-  }
-
-  async function submitLog(e) {
-    e.preventDefault();
-    try {
-      await API.post("/patient/log", {
-        steps: Number(logForm.steps) || 0,
-        sleepHours: Number(logForm.sleepHours) || 0,
-        waterIntakeML: Number(logForm.waterIntakeML) || 0,
-      });
-      alert("Activity logged!");
-      const res = await API.get("/patient/dashboard");
-      setData(res.data);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to log activity");
-    }
-  }
-
-  if (!data) return <div>Loading dashboard...</div>;
-
-  const { user, goals, todayLog, complianceScore, reminders } = data;
+  if (loading) return <p style={{ padding: "30px" }}>Loading...</p>;
+  if (error) return <p style={{ padding: "30px", color: "red" }}>{error}</p>;
 
   return (
-    <div className="dashboard">
-      <h2>Hi {user.name}, your wellness overview</h2>
-      <p className="muted">Daily compliance: {complianceScore}%</p>
+    <div className="dashboard-container">
+      <h2 className="dash-header">Welcome, {dashboard.name} 👋</h2>
 
-      <div className="grid">
-        <StepsCard
-          current={todayLog?.steps || 0}
-          target={goals?.dailyStepsTarget || 8000}
-        />
-        <SleepCard
-          hours={todayLog?.sleepHours || 0}
-          target={goals?.dailySleepTarget || 8}
-        />
-        <div className="card">
-          <h3>Water Intake</h3>
-          <p>
-            {todayLog?.waterIntakeML || 0} /{" "}
-            {goals?.waterIntakeTargetML || 2000} ml
-          </p>
+      <div className="dash-grid">
+        {/* Steps */}
+        <div className="dash-card">
+          <h3>Steps</h3>
+          <div className="progress-bar">
+            <div style={{ width: `${dashboard.stepsPercentage}%` }} />
+          </div>
+          <p>{dashboard.steps} / {dashboard.stepsGoal} steps</p>
+        </div>
+
+        {/* Sleep */}
+        <div className="dash-card">
+          <h3>Sleep Tracker</h3>
+          <p>{dashboard.sleep} hours</p>
+        </div>
+
+        {/* Active Time */}
+        <div className="dash-card">
+          <h3>Active Time</h3>
+          <p>{dashboard.activeTime} minutes</p>
+        </div>
+
+        {/* Reminders */}
+        <div className="dash-card">
+          <h3>Preventive Reminders</h3>
+          <ul className="reminders">
+            {dashboard.reminders.map((reminder, i) => (
+              <li key={i}>
+                <Bell size={16} /> {reminder}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Health Tip */}
+        <div className="dash-card tip">
+          <h3>Health Tip of the Day</h3>
+          <p>{dashboard.healthTip}</p>
         </div>
       </div>
-
-      <section className="section">
-        <h3>Log Today&apos;s Activity</h3>
-        <form className="log-form" onSubmit={submitLog}>
-          <input
-            name="steps"
-            type="number"
-            placeholder="Steps"
-            value={logForm.steps}
-            onChange={handleChange}
-          />
-          <input
-            name="sleepHours"
-            type="number"
-            placeholder="Sleep hours"
-            value={logForm.sleepHours}
-            onChange={handleChange}
-          />
-          <input
-            name="waterIntakeML"
-            type="number"
-            placeholder="Water (ml)"
-            value={logForm.waterIntakeML}
-            onChange={handleChange}
-          />
-          <button>Save</button>
-        </form>
-      </section>
-
-      <section className="section">
-        <h3>Preventive Reminders</h3>
-        <div className="grid">
-          {(reminders || []).length === 0 && (
-            <p className="muted">No reminders yet.</p>
-          )}
-          {(reminders || []).map((r) => (
-            <ReminderCard key={r._id} {...r} />
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
