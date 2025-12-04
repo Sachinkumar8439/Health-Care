@@ -291,6 +291,7 @@ Based on the provided mockups:
 
 # 📦 12. Folder Structure
 
+```
 healthcare-portal/
 │
 ├── README.md
@@ -360,3 +361,4 @@ healthcare-portal/
     └── workflows/
         └── ci.yml   (optional: GitHub Actions)
 
+```
